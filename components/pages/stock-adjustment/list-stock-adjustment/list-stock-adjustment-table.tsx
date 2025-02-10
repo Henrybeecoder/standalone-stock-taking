@@ -3,9 +3,20 @@ import reverse_arrows from "@/public/assets/icons/reverse_arrrows.svg";
 import eye_open_icon from "@/public/assets/icons/eye_open_icon.svg";
 import Image from "next/image";
 import { useModal } from "@/contexts/ModalContextProvider";
+import { GetStockTakingResponse } from "@/types";
+import { Format } from "@/utils/format.util";
 
-const ListStockAdjustmentTable = () => {
-  const { setShowModal } = useModal();
+interface ListStockAdjustmentTableProps {
+  data?: GetStockTakingResponse[];
+  isPending: boolean;
+}
+
+const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
+  data,
+  isPending,
+}) => {
+  const { setShowModal, setModalPayload } = useModal();
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="text-sm table-auto w-full border border-[#F4F4F4]">
@@ -68,43 +79,52 @@ const ListStockAdjustmentTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr
-            className="odd:bg-gray-50 even:bg-white cursor-pointer"
-            onClick={() => setShowModal("stock-adjustment-details")}
-          >
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 flex flex-col items-start">
-              <button className="bg-[#1472E8] p-2 px-3 w-max text-white font-semibold text-sm flex items-center gap-1">
-                <Image src={eye_open_icon} alt="eye-icon" />
-                View
-              </button>
-              {/* <button className="bg-[#EC3B65] p-2 px-3 w-max text-white font-semibold text-sm flex items-center gap-1">
-                <Image src={delete_icon} alt="delete-icon" />
-                Delete
-              </button> */}
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2">
-              12/16/2024 09:03
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              SA2024/0016
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              Kentwood
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              Normal
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              # 18 009.00
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              # 0.00
-            </td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right"></td>
-            <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-              Clark Kent
-            </td>
-          </tr>
+          {data &&
+            data?.map((item, index) => (
+              <tr className="odd:bg-gray-50 even:bg-white " key={index}>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 flex flex-col items-start">
+                  <button
+                    onClick={() => {
+                      setShowModal("stock-adjustment-details");
+                      setModalPayload(item);
+                    }}
+                    className="bg-[#1472E8] p-2 px-3 w-max text-white font-semibold text-sm flex items-center gap-1"
+                  >
+                    <Image src={eye_open_icon} alt="eye-icon" />
+                    View
+                  </button>
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2">
+                  {/* 12/16/2024 09:03 */}
+                  {item &&
+                    Format.dateTime(item?.date_taken).date +
+                      " " +
+                      Format.dateTime(item?.date_taken).time}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {/* SA2024/0016 */}
+                  {item?.ref_no || "N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {"N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {item.adjustment_type ?? "N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {item.items[index].product.selling_price ?? "N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {"N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {"N/A"}
+                </td>
+                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
+                  {item.created_by.first_name ?? "N/A"}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

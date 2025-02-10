@@ -11,9 +11,12 @@ import { useModal } from "@/contexts/ModalContextProvider";
 import React from "react";
 import print_icon from "@/public/assets/icons/print_white_icon.svg";
 import Image from "next/image";
+import { GetStockTakingResponse } from "@/types";
+import { Format } from "@/utils/format.util";
 
 const StockAdjustmentDetailsModal = () => {
-  const { showModal, setShowModal } = useModal();
+  const { showModal, setShowModal, modalPayload } =
+    useModal<GetStockTakingResponse>();
   return (
     <ModalLayout
       isOpen={showModal === "stock-adjustment-details"}
@@ -38,7 +41,7 @@ const StockAdjustmentDetailsModal = () => {
           //   marginRight={"20px"}
         /> */}
         <ModalHeader>
-          Stock adjustment details (Reference No: #SA2024/0016)
+          Stock adjustment details (Reference No: {modalPayload?.ref_no})
         </ModalHeader>
 
         <ModalBody
@@ -49,20 +52,23 @@ const StockAdjustmentDetailsModal = () => {
             <span className="flex flex-col">
               <h2 className="font-semibold">Business:</h2>
               <p className="w-1/2">
-                Kentwood Kentwood Oba Palace Ikorodu, Lagos, Nigeria Mobile:
-                09076453423
+                {/* Kentwood Kentwood Oba Palace Ikorodu, Lagos, Nigeria Mobile:
+                09076453423 */}
               </p>
             </span>
             <span className="flex flex-col">
               <p>
                 <span className="font-semibold">Reference No:</span>{" "}
-                #SA2024/0016
+                {modalPayload?.ref_no}
               </p>
               <p>
-                <span className="font-semibold">Date:</span> 12/16/2024
+                <span className="font-semibold">Date:</span>{" "}
+                {modalPayload?.date_taken &&
+                  Format.dateTime(modalPayload?.date_taken).date}
               </p>
               <p>
-                <span className="font-semibold">Adjustment type:</span> Normal
+                <span className="font-semibold">Adjustment type:</span>{" "}
+                {modalPayload?.adjustment_type}
               </p>
               <p>
                 <span className="font-semibold">Reason:</span>
@@ -70,7 +76,9 @@ const StockAdjustmentDetailsModal = () => {
             </span>
             <span>
               <p>
-                <span className="font-semibold">Date:</span> 12/16/2024
+                <span className="font-semibold">Date:</span>{" "}
+                {modalPayload?.date_taken &&
+                  Format.dateTime(modalPayload?.date_taken).date}
               </p>
             </span>
           </div>
@@ -85,13 +93,17 @@ const StockAdjustmentDetailsModal = () => {
               </tr>
             </thead>
             <tbody className="bg-[#D3D5E1]">
-              <tr className="">
-                <td className="p-2">23G NEEDLES (109748)</td>
-                <td className="p-2">--</td>
-                <td className="p-2">9.00</td>
-                <td className="p-2">2001.00</td>
-                <td className="p-2">18.009.00</td>
-              </tr>
+              {modalPayload?.items.map((item, index) => (
+                <tr className="" key={index}>
+                  <td className="p-2">{item.product.name} </td>
+                  <td className="p-2">
+                    {Format.dateTime(item.product.expiry_date).date}{" "}
+                  </td>
+                  <td className="p-2">N/A </td>
+                  <td className="p-2">{item.product.unit.short_name} </td>
+                  <td className="p-2">{item.product.selling_price} </td>
+                </tr>
+              ))}
             </tbody>
             <tfoot>
               <tr className="">

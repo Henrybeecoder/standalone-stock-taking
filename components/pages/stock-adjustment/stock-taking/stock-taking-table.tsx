@@ -4,14 +4,31 @@ import { Product } from "@/types";
 
 interface StockTakingTableProps {
   products: Product[];
+  selectedProducts: number[];
+  onProductSelect: (productId: number) => void;
+  onSelectAll: () => void;
 }
 
-const StockTakingTable: React.FC<StockTakingTableProps> = ({ products }) => {
+const StockTakingTable: React.FC<StockTakingTableProps> = ({
+  products,
+  selectedProducts,
+  onProductSelect,
+  onSelectAll,
+}) => {
+  const allSelected = selectedProducts.length === products.length;
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="table-auto w-full border-">
         <thead className="bg-white">
           <tr>
+            <th className="border-4 border-l-0 border-[#F6F6F6] px-4 py-2 text-left">
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={onSelectAll}
+              />
+            </th>
             <th className="border-4 border-l-0 border-[#F6F6F6] px-4 py-2 text-left">
               Product Name
             </th>
@@ -39,35 +56,15 @@ const StockTakingTable: React.FC<StockTakingTableProps> = ({ products }) => {
           </tr>
         </thead>
         <tbody>
-          <tr className="odd:bg-gray-50 even:bg-white">
-            <td className="border-4 border-[#F6F6F6] px-4 py-2">
-              <input
-                placeholder="Search a product..."
-                className="bg-gray-50 focus:outline-none"
-              />
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2">...</td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-            <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-              ...
-            </td>
-          </tr>
           {products.map((product, index) => (
             <tr className="odd:bg-gray-50 even:bg-white" key={index}>
+              <td className="border-4 border-[#F6F6F6] px-4 py-2">
+                <input
+                  type="checkbox"
+                  checked={selectedProducts.includes(product.id)}
+                  onChange={() => onProductSelect(product.id)}
+                />
+              </td>
               <td className="border-4 border-[#F6F6F6] px-4 py-2">
                 {product.name ?? "--"}
               </td>
@@ -95,17 +92,10 @@ const StockTakingTable: React.FC<StockTakingTableProps> = ({ products }) => {
             </tr>
           ))}
         </tbody>
-        {/* <tfoot className="bg-white w-full">
-          <tr className="w-full bg-white">
-            <th className="px-4 py-2 text-left">
-              Showing 1 to 10 of 50 entries
-            </th>
-          </tr>
-        </tfoot> */}
       </table>
       <div className="bg-[#F6F6F6] w-full h-10"></div>
       <div className="bg-white w-full p-4">
-        <p className="text-sm py-5">Showing 1 to 10 of 50 entries</p>
+        {/* <p className="text-sm py-5">Showing 1 to 10 of 50 entries</p> */}
       </div>
     </div>
   );

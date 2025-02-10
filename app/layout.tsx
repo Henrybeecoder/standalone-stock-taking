@@ -5,6 +5,7 @@ import { ModalContextProvider } from "@/contexts/ModalContextProvider";
 import ClientLayout from "./client-layout";
 import { ChakraProvider } from "@/providers/ChakraProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import UserAuthContextProvider from "@/contexts/UserAuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +32,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} text-black antialiased`}
       >
-        <ChakraProvider>
-          <ReactQueryProvider>
-            <ModalContextProvider>
-              <ClientLayout>{children}</ClientLayout>
-            </ModalContextProvider>
-          </ReactQueryProvider>
-        </ChakraProvider>
+        <UserAuthContextProvider>
+          <ChakraProvider>
+            <ReactQueryProvider>
+              <ModalContextProvider>
+                <ClientLayout>{children}</ClientLayout>
+              </ModalContextProvider>
+            </ReactQueryProvider>
+          </ChakraProvider>
+        </UserAuthContextProvider>
       </body>
     </html>
   );

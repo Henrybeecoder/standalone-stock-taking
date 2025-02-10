@@ -2,13 +2,14 @@
 import { ApiRequest } from "@/utils/apiRequest.util";
 import { ApiUrl } from "@/utils/apiUrl.util";
 import { handleOnChange } from "@/utils/handleOnChange.util";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const toast = useToast();
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
@@ -32,10 +33,23 @@ const Login = () => {
       console.log(data);
       const token = data.access_token;
       Cookies.set("token", token, { secure: true, sameSite: "strict" });
+      toast({
+        status: "success",
+        description: "Login successful",
+        position: "top",
+        isClosable: true,
+      });
       router.push("/stock-adjustment/stock-taking");
     },
-    onError: (error: unknown) => {
+    onError: (error: any) => {
+      const errorMessage = error.response.data.message;
       console.log(error);
+      toast({
+        status: "error",
+        description: errorMessage ?? "An error occured",
+        position: "top",
+        isClosable: true,
+      });
     },
   });
 

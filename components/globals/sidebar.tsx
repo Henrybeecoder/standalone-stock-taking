@@ -4,9 +4,15 @@ import Image from "next/image";
 import arrow_icon from "@/public/assets/icons/navbar/arrow_icon.svg";
 import { useState } from "react";
 import Link from "next/link";
+import useSidebar from "@/atoms/SidebarAtom";
 
 const Sidebar = () => {
   const [dropdownIsOpen, setDropdownIsOpen] = useState<string>("");
+  const [sidebarIsOpen, setSidebarIsOpen] = useSidebar();
+
+  const toggleSidebar = () => {
+    setSidebarIsOpen(!sidebarIsOpen);
+  };
 
   const handleDropdownClick = (name: string) => {
     setDropdownIsOpen((prev) => (prev === name ? "" : name));
@@ -14,8 +20,17 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar bg-[#22243D] top-[73px] w-[309px] h-screen fixed overflow-y-scroll flex flex-col gap-[10px]`}
+      className={`sidebar bg-[#22243D] top-[73px] w-[309px] h-screen fixed overflow-y-scroll flex flex-col gap-[10px] transition-transform duration-300 ${
+        sidebarIsOpen ? "translate-x-0" : "-translate-x-full"
+      } lg:translate-x-0`}
     >
+      {/* Add an overlay for medium screens */}
+      <div
+        className={`fixed inset-0 bg-black opacity-50 transition-opacity duration-300 ${
+          sidebarIsOpen ? "block lg:hidden" : "hidden"
+        }`}
+        onClick={toggleSidebar}
+      />
       {sidebarData.map((item, index) => {
         const isOpen = dropdownIsOpen === item.name;
         return (
@@ -59,7 +74,7 @@ const Sidebar = () => {
               )}
             </div>
             {isOpen && item.children && (
-              <div className="pl-[40px] ml-[20px]">
+              <div className={`pl-[40px] ml-[20px]`}>
                 {item.children.map((child, childIndex) => (
                   <Link key={childIndex} href={child.href}>
                     <p className="text-sm text-white py-1">{child.name}</p>

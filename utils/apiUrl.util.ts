@@ -32,6 +32,7 @@ export class ApiUrl {
 
   //stock-adjustment
   public static stockTaking = `${ApiUrl.baseUrl}/stock-taking`;
+  public static getStockAdjustments = `${ApiUrl.baseUrl}/stock-taking`;
 
   //products
   public static getProducts = `${ApiUrl.baseUrl}/product`;

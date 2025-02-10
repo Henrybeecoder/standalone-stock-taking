@@ -4,9 +4,14 @@ import { InputHTMLAttributes } from "react";
 
 interface SearchbarProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
+  handleSearch?: (searchString: string) => void;
 }
 
-const Searchbar: React.FC<SearchbarProps> = ({ placeholder, ...props }) => {
+const Searchbar: React.FC<SearchbarProps> = ({
+  placeholder,
+  handleSearch,
+  ...props
+}) => {
   return (
     <div className="searchbar relative border border-[#D2D6DE] ">
       <Image
@@ -18,6 +23,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ placeholder, ...props }) => {
         type="text"
         placeholder={`${placeholder ?? "Search"}`}
         className="search-input text-sm w-full pl-7"
+        onChange={(e) => handleSearch && handleSearch(e.target.value)}
         {...props}
       />
     </div>

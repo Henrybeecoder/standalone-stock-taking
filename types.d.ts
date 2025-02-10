@@ -169,6 +169,81 @@ type Category = {
   updated_at: string;
 };
 
+type Media = {
+  id: number;
+  business_id: number;
+  file_name: string;
+  description: string | null;
+  uploaded_by: number;
+  model_type: string;
+  woocommerce_media_id: string | null;
+  model_media_type: string | null;
+  model_id: number;
+  created_at: string;
+  updated_at: string;
+  display_name: string;
+  display_url: string;
+};
+
+type CreatedBy = {
+  id: number;
+  user_type: string | null;
+  surname: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  username: string;
+  email: string;
+  language: string;
+  contact_no: string | number | null;
+  address: string | null;
+  business_id: 3;
+  available_at: string | null;
+  paused_at: string | null;
+  max_sales_discount_percent: string | null;
+  allow_login: 1;
+  status: "active";
+  is_enable_service_staff_pin: 0;
+  service_staff_pin: string | number | null;
+  crm_contact_id: number | null;
+  is_cmmsn_agnt: number;
+  cmmsn_percent: string;
+  selected_contacts: number;
+  dob: string | null;
+  gender: string | null;
+  marital_status: string | null;
+  blood_group: string | null;
+  contact_number: string | number | null;
+  alt_number: string | number | null;
+  family_number: string | number | null;
+  fb_link: string | null;
+  twitter_link: string | null;
+  social_media_1: string | null;
+  social_media_2: string | null;
+  permanent_address: string | null;
+  current_address: string | null;
+  guardian_name: string | null;
+  custom_field_1: string | null;
+  custom_field_2: string | null;
+  custom_field_3: string | null;
+  custom_field_4: string | null;
+  bank_details: string;
+  id_proof_name: string | null;
+  id_proof_number: string | number | null;
+  uuid: string;
+  image_url: string;
+  media: Media;
+};
+
+export type Items = {
+  id: number;
+  prev_quantity: number;
+  current_quantity: number;
+  stock_difference: number;
+  product: Product;
+  created_at: string;
+  updated_at: string;
+};
+
 type ProductLocation = {
   id: number;
   business_id: number;
@@ -206,4 +281,15 @@ type ProductLocation = {
     product_id: number;
     location_id: number;
   };
+};
+
+export type GetStockTakingResponse = {
+  id: number;
+  adjustment_type: string;
+  ref_no: string;
+  date_taken: string;
+  created_at: string;
+  updated_at: string;
+  created_by: CreatedBy;
+  items: Items[];
 };

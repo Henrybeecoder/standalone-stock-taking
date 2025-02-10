@@ -1,3 +1,4 @@
+"use client";
 import DashboardLayout from "@/components/layouts/dashboard-layout";
 import Image from "next/image";
 import column_visibility_icon from "@/public/assets/icons/column_visibility_icon.svg";
@@ -7,8 +8,49 @@ import print_icon from "@/public/assets/icons/print_icon.svg";
 import export_to_pdf_icon from "@/public/assets/icons/export_to_pdf_icon.svg";
 import Searchbar from "@/components/ui/search-bar";
 import ListStockAdjustmentTable from "@/components/pages/stock-adjustment/list-stock-adjustment/list-stock-adjustment-table";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { ApiRequest } from "@/utils/apiRequest.util";
+import { ApiUrl } from "@/utils/apiUrl.util";
+import Cookies from "js-cookie";
+import { GetStockTakingResponse } from "@/types";
+import { useEffect, useState } from "react";
 
 const ListStockAdjustment = () => {
+  const token = Cookies.get("token");
+  const [stockAdjustmentData, setStockAdjustmentData] = useState<
+    GetStockTakingResponse[] | undefined
+  >(undefined);
+
+  const {
+    data,
+    isPending,
+    error,
+    isError,
+  }: UseQueryResult<{ data: GetStockTakingResponse[] }, Error> = useQuery({
+    queryKey: ["getStockAdjustments"],
+    queryFn: async () => {
+      const response = await ApiRequest.get(ApiUrl.getStockAdjustments, {
+        Authorization: `Bearer ${token}`,
+      });
+      return response.data;
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setStockAdjustmentData(data.data);
+    }
+  }, [data]);
+
+  const handleSearchStockAdjustmentData = (searchString: string) => {
+    if (data) {
+      const filteredData = data.data.filter((element) =>
+        element.ref_no.toLowerCase().includes(searchString.toLowerCase())
+      );
+      setStockAdjustmentData(filteredData);
+    }
+  };
+
   return (
     <DashboardLayout className="w-full">
       <div className="flex flex-col gap-3">
@@ -22,20 +64,6 @@ const ListStockAdjustment = () => {
             </button>
           </span>
           <div className="flex items-center justify-between gap-3">
-            <span className="flex gap-1 items-center">
-              <p className="text-sm">Show</p>{" "}
-              <select
-                className="form-control border border-[#D2D6DE] p-1"
-                id="business_location"
-              >
-                <option value="">5</option>
-                <option value="">10</option>
-                <option value="">15</option>
-                <option value="">20</option>
-                <option value="">25</option>
-              </select>
-              <p className="text-sm">entries</p>
-            </span>
             <div className="flex items-center">
               <span className="flex items-center gap-1 p-1 cursor-pointer bg-[#EAEAEA] border border-[#D2D6DE]">
                 <Image src={column_visibility_icon} alt="" />
@@ -58,9 +86,12 @@ const ListStockAdjustment = () => {
                 <p className="text-xs">Export to PDF</p>
               </span>
             </div>
-            <Searchbar />
+            <Searchbar handleSearch={handleSearchStockAdjustmentData} />
           </div>
-          <ListStockAdjustmentTable />
+          <ListStockAdjustmentTable
+            data={stockAdjustmentData}
+            isPending={isPending}
+          />
         </div>
       </div>
     </DashboardLayout>
