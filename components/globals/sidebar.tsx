@@ -54,12 +54,12 @@ const Sidebar = () => {
                   href={item.href}
                   className="flex items-center w-full gap-2"
                 >
-                  <Image src={item.icon} alt={"icon-" + index} />
+                  {item.icon && <Image src={item.icon} alt={"icon-" + index} />}
                   <p className="text-sm text-white">{item.name}</p>
                 </Link>
               ) : (
                 <span className="flex items-center w-full gap-2">
-                  <Image src={item.icon} alt={"icon-" + index} />
+                  {item.icon && <Image src={item.icon} alt={"icon-" + index} />}
                   <p className="text-sm text-white">{item.name}</p>
                 </span>
               )}

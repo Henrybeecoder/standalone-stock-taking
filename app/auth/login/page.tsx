@@ -41,15 +41,22 @@ const Login = () => {
       });
       router.push("/stock-adjustment/stock-taking");
     },
-    onError: (error: any) => {
-      const errorMessage = error.response.data.message;
-      console.log(error);
-      toast({
-        status: "error",
-        description: errorMessage ?? "An error occured",
-        position: "top",
-        isClosable: true,
-      });
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        toast({
+          status: "error",
+          description: error.message,
+          position: "top",
+          isClosable: true,
+        });
+      } else {
+        toast({
+          status: "error",
+          description: "An unexpected error occurred.",
+          position: "top",
+          isClosable: true,
+        });
+      }
     },
   });
 

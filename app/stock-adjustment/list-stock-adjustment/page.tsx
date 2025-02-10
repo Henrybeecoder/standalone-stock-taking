@@ -20,12 +20,15 @@ const ListStockAdjustment = () => {
   const [stockAdjustmentData, setStockAdjustmentData] = useState<
     GetStockTakingResponse[] | undefined
   >(undefined);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const {
     data,
     isPending,
-    error,
-    isError,
   }: UseQueryResult<{ data: GetStockTakingResponse[] }, Error> = useQuery({
     queryKey: ["getStockAdjustments"],
     queryFn: async () => {
@@ -50,6 +53,10 @@ const ListStockAdjustment = () => {
       setStockAdjustmentData(filteredData);
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <DashboardLayout className="w-full">

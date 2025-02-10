@@ -16,7 +16,7 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
   isPending,
 }) => {
   const { setShowModal, setModalPayload } = useModal();
-
+  console.log(isPending);
   return (
     <div className="w-full overflow-x-auto">
       <table className="text-sm table-auto w-full border border-[#F4F4F4]">
@@ -95,14 +95,12 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                   </button>
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2">
-                  {/* 12/16/2024 09:03 */}
                   {item &&
                     Format.dateTime(item?.date_taken).date +
                       " " +
                       Format.dateTime(item?.date_taken).time}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {/* SA2024/0016 */}
                   {item?.ref_no || "N/A"}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
@@ -112,7 +110,7 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                   {item.adjustment_type ?? "N/A"}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {item.items[index].product.selling_price ?? "N/A"}
+                  {item.items[index]?.product.selling_price ?? "N/A"}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
                   {"N/A"}

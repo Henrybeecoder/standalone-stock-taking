@@ -1,4 +1,3 @@
-import useSidebar from "@/atoms/SidebarAtom";
 import Navbar from "../globals/navbar";
 import Sidebar from "../globals/sidebar";
 

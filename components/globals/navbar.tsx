@@ -7,11 +7,9 @@ import cash_button from "@/public/assets/images/cash_button.svg";
 import notification_icon from "@/public/assets/icons/notification_icon.svg";
 import profile_pic from "@/public/assets/images/profile_pic.svg";
 import Image from "next/image";
-import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./sidebar";
 import useSidebar from "@/atoms/SidebarAtom";
-import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useSidebar();
@@ -19,8 +17,6 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);
   };
-
-  const token = Cookies.get("token");
 
   const currentDate = new Date().toLocaleDateString();
   const formattedCurrentDate = currentDate.replace(/\//g, "-");
