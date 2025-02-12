@@ -5,10 +5,13 @@ import arrow_icon from "@/public/assets/icons/navbar/arrow_icon.svg";
 import { useState } from "react";
 import Link from "next/link";
 import useSidebar from "@/atoms/SidebarAtom";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const [dropdownIsOpen, setDropdownIsOpen] = useState<string>("");
   const [sidebarIsOpen, setSidebarIsOpen] = useSidebar();
+
+  const pathname = usePathname();
 
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);
@@ -33,6 +36,8 @@ const Sidebar = () => {
       />
       {sidebarData.map((item, index) => {
         const isOpen = dropdownIsOpen === item.name;
+        const isActive =
+          item.identifier && pathname.startsWith(item.identifier);
         return (
           <div
             key={index}
@@ -40,12 +45,12 @@ const Sidebar = () => {
           >
             <div
               className={`w-[5px] h-[40px] bg-[#05A55A] ${
-                isOpen ? "opacity-100" : "opacity-0"
+                isActive || isOpen ? "opacity-100" : "opacity-0"
               } group-hover:opacity-100 absolute left-0 top-0`}
             />
             <div
               className={`w-full flex items-center justify-between px-[20px] py-2 hover:bg-[#1D1F33] rounded-[5px] ${
-                isOpen && "bg-[#1D1F33]"
+                isActive || isOpen ? "bg-[#1D1F33]" : ""
               }`}
               onClick={() => handleDropdownClick(item.name)}
             >
@@ -68,7 +73,7 @@ const Sidebar = () => {
                   src={arrow_icon}
                   alt="arrow-icon"
                   className={`${
-                    isOpen && "rotate-90 transition-transform duration-300"
+                    isOpen ? "rotate-90 transition-transform duration-300" : ""
                   }`}
                 />
               )}

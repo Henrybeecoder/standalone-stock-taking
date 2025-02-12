@@ -14,6 +14,7 @@ import { ApiUrl } from "@/utils/apiUrl.util";
 import Cookies from "js-cookie";
 import { GetStockTakingResponse } from "@/types";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const ListStockAdjustment = () => {
   const token = Cookies.get("token");
@@ -61,14 +62,17 @@ const ListStockAdjustment = () => {
   return (
     <DashboardLayout className="w-full">
       <div className="flex flex-col gap-3">
-        <h1 className="text-[36px] font-medium">List Stock Adjustments</h1>
+        <h1 className="text-3xl font-medium">List Stock Adjustments</h1>
         <div className="bg-gradient-to-r from-[#2CCE8A] to-[#1B9AA9] h-1" />
         <div className="flex flex-col gap-6">
           <span className="flex justify-between items-center">
-            <h2 className="text-lg">List Stock Adjustments</h2>
-            <button className="bg-[#1472E8] p-2 px-3 w-max text-white font-semibold">
+            <h2 className="text-base">List Stock Adjustments</h2>
+            <Link
+              href={"/stock-adjustment/stock-taking"}
+              className="bg-[#1472E8] p-2 px-3 w-max text-white font-semibold"
+            >
               + Add
-            </button>
+            </Link>
           </span>
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center">

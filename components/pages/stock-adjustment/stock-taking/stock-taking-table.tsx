@@ -19,7 +19,7 @@ const StockTakingTable: React.FC<StockTakingTableProps> = ({
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="table-auto w-full border-">
+      <table className="table-auto w-full text-sm">
         <thead className="bg-white">
           <tr>
             <th className="border-4 border-l-0 border-[#F6F6F6] px-4 py-2 text-left">
@@ -75,10 +75,18 @@ const StockTakingTable: React.FC<StockTakingTableProps> = ({
                 {product.alert_quantity ?? "--"}
               </td>
               <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-                {product.alert_quantity ?? "--"}
+                <input
+                  type="number"
+                  className="border border-[#D2D6DE] p-1"
+                  name=""
+                />
               </td>
               <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-                {product.alert_quantity ?? "--"}
+                <input
+                  type="number"
+                  className="border border-[#D2D6DE] p-1"
+                  name=""
+                />
               </td>
               <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
                 {product.alert_quantity ?? "--"}

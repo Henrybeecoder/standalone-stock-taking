@@ -19,65 +19,78 @@ type SidebarDataProps =
   | {
       name: string;
       href: string;
+      identifier: string;
       icon: string | StaticImageData;
       children: null;
     }
   | {
       name: string;
-      icon: string | StaticImageData;
       href: null;
-      children: { name: string; href: string }[];
+      identifier: string;
+      icon: string | StaticImageData;
+      children: { name: string; href: string }[] | null;
     };
 
 export const sidebarData: SidebarDataProps[] = [
   {
     name: "Home",
     href: null,
+    identifier: "",
     icon: home_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "User Management",
     href: null,
+    identifier: "",
     icon: user_management_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Contact",
     href: null,
+    identifier: "",
     icon: contact_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Product",
     href: null,
+    identifier: "",
     icon: product_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Purchases",
     href: null,
+    identifier: "",
     icon: purchases_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Sell",
     href: null,
+    identifier: "",
     icon: sell_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Stock Transfer",
     href: null,
+    identifier: "",
     icon: stock_transfer_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Stock Adjustment",
     href: null,
+    identifier: "/stock-adjustment",
     icon: stock_adjustment_icon,
     children: [
-      { name: "Stock Taking", href: "/stock-adjustment/stock-taking" },
+      {
+        name: "Add Stock Adjustment",
+        href: "/stock-adjustment/add-stock-adjustment",
+      },
       {
         name: "List Stock Adjustment",
         href: "/stock-adjustment/list-stock-adjustment",
@@ -87,43 +100,50 @@ export const sidebarData: SidebarDataProps[] = [
   {
     name: "Expense",
     href: null,
+    identifier: "",
     icon: expense_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Payment Accounts",
     href: null,
+    identifier: "",
     icon: payment_accounts_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Reports",
     href: null,
+    identifier: "",
     icon: reports_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Notification Template",
     href: "",
+    identifier: "",
     icon: notification_template_icon,
     children: null,
   },
   {
     name: "Settings",
     href: null,
+    identifier: "",
     icon: settings_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "WooCommerce",
     href: null,
+    identifier: "",
     icon: woocommerce_icon,
     children: [{ name: "", href: "" }],
   },
   {
     name: "Connector",
-    href: connector_icon,
-    icon: "",
+    href: "",
+    identifier: "",
+    icon: connector_icon,
     children: null,
   },
 ];

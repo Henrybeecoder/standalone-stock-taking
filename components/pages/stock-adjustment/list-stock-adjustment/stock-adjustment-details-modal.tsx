@@ -127,7 +127,12 @@ const StockAdjustmentDetailsModal = () => {
             <div className="flex items-center gap-2 justify-between">
               <span className="flex flex-col gap-2">
                 <p className="font-bold">Date</p>
-                <p>12/16/2024 09:04 AM</p>
+                <p>
+                  {modalPayload &&
+                    Format.dateTime(modalPayload?.date_taken).date}{" "}
+                  {modalPayload &&
+                    Format.dateTime(modalPayload?.date_taken).time}
+                </p>
               </span>
               <span className="flex flex-col gap-2">
                 <p className="font-bold">Action</p>
@@ -135,7 +140,11 @@ const StockAdjustmentDetailsModal = () => {
               </span>
               <span className="flex flex-col gap-2">
                 <p className="font-bold">By</p>
-                <p>Clark Kent</p>
+                <p>
+                  {modalPayload &&
+                    modalPayload.created_by.first_name &&
+                    modalPayload.created_by.first_name}
+                </p>
               </span>
               <span className="flex flex-col gap-2">
                 <p className="font-bold">Note</p>
