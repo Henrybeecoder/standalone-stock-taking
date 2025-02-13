@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import useSidebar from "@/atoms/SidebarAtom";
 import { usePathname } from "next/navigation";
+import right_arrow from "@/public/assets/icons/right_arrow.svg";
 
 const Sidebar = () => {
   const [dropdownIsOpen, setDropdownIsOpen] = useState<string>("");
@@ -80,11 +81,21 @@ const Sidebar = () => {
             </div>
             {isOpen && item.children && (
               <div className={`pl-[40px] ml-[20px]`}>
-                {item.children.map((child, childIndex) => (
-                  <Link key={childIndex} href={child.href}>
-                    <p className="text-sm text-white py-1">{child.name}</p>
-                  </Link>
-                ))}
+                {item.children.map((child, childIndex) => {
+                  const isActive = pathname === child.href;
+                  return (
+                    <Link key={childIndex} href={child.href}>
+                      <div
+                        className={`${
+                          !isActive ? "opacity-50" : "opacity-100"
+                        } flex items-center gap-[11.25px]`}
+                      >
+                        <Image src={right_arrow} alt="" />
+                        <p className="text-sm text-white py-1">{child.name}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>

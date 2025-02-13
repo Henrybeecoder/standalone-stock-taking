@@ -62,7 +62,7 @@ const ListStockAdjustment = () => {
   return (
     <DashboardLayout className="w-full">
       <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-medium">List Stock Adjustments</h1>
+        <h1 className="text-xl font-medium">List Stock Adjustments</h1>
         <div className="bg-gradient-to-r from-[#2CCE8A] to-[#1B9AA9] h-1" />
         <div className="flex flex-col gap-6">
           <span className="flex justify-between items-center">

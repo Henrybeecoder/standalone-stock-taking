@@ -291,5 +291,6 @@ export type GetStockTakingResponse = {
   created_at: string;
   updated_at: string;
   created_by: CreatedBy;
+  location: BusinessLocation;
   items: Items[];
 };

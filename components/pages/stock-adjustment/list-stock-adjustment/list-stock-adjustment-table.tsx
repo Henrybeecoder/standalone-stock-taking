@@ -52,21 +52,10 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                 <Image src={reverse_arrows} alt="arrows" />
               </div>
             </th>
+
             <th className="border-4 border-[#F4F4F4] px-4 py-2 text-left">
               <div className="flex items-center gap-1">
-                Table Amount
-                <Image src={reverse_arrows} alt="arrows" />
-              </div>
-            </th>
-            <th className="border-4 border-[#F4F4F4] px-4 py-2 text-left">
-              <div className="flex items-center gap-1">
-                Total Amount Recovered
-                <Image src={reverse_arrows} alt="arrows" />
-              </div>
-            </th>
-            <th className="border-4 border-[#F4F4F4] px-4 py-2 text-left">
-              <div className="flex items-center gap-1">
-                Reason
+                Sub Total
                 <Image src={reverse_arrows} alt="arrows" />
               </div>
             </th>
@@ -104,7 +93,7 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                   {item?.ref_no || "N/A"}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {"N/A"}
+                  {item.location.name}
                 </td>
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
                   {item.adjustment_type ?? "N/A"}
@@ -112,12 +101,7 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
                   {item.items[index]?.product.selling_price ?? "N/A"}
                 </td>
-                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {"N/A"}
-                </td>
-                <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {"N/A"}
-                </td>
+
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
                   {item.created_by.first_name ?? "N/A"}
                 </td>

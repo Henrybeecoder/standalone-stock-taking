@@ -88,8 +88,8 @@ export const sidebarData: SidebarDataProps[] = [
     icon: stock_adjustment_icon,
     children: [
       {
-        name: "Add Stock Adjustment",
-        href: "/stock-adjustment/add-stock-adjustment",
+        name: "Stock Taking",
+        href: "/stock-adjustment/stock-taking",
       },
       {
         name: "List Stock Adjustment",

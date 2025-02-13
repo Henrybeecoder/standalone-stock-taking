@@ -1,7 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/components/layouts/dashboard-layout";
-import AddStockAdjustmentTable from "@/components/pages/stock-adjustment/stock-taking/stock-taking-table";
+import StockTakingTable from "@/components/pages/stock-adjustment/stock-taking/stock-taking-table";
 import { BusinessLocation, Product } from "@/types";
 import { ApiRequest } from "@/utils/apiRequest.util";
 import { ApiUrl } from "@/utils/apiUrl.util";
@@ -11,7 +11,7 @@ import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { FormEvent, useState, useEffect } from "react";
 
-type AddStockAdjustmentRequest = {
+type StockTakingRequest = {
   location_id: number | undefined;
   ref_no: string;
   date_taken: string;
@@ -23,12 +23,12 @@ type AddStockAdjustmentRequest = {
   }[];
 };
 
-const AddStockAdjustment = () => {
+const StockTaking = () => {
   const token = Cookies.get("token");
 
   const toast = useToast();
 
-  const [formData, setFormData] = useState<AddStockAdjustmentRequest>({
+  const [formData, setFormData] = useState<StockTakingRequest>({
     location_id: undefined,
     ref_no: "",
     date_taken: "",
@@ -178,16 +178,16 @@ const AddStockAdjustment = () => {
 
   return (
     <DashboardLayout className="w-full">
-      <h1 className="text-3xl font-medium">Add Stock Taking</h1>
+      <h1 className="text-xl font-medium">Add Stock Taking</h1>
       <form
         onSubmit={handleSave}
         className="flex flex-col gap-[39px] items-center w-full"
       >
         <div className="bg-white rounded p-5 px-4 grid md:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-3 place-items-start w-full">
-          <span className="flex flex-col gap-1">
+          <span className="flex flex-col gap-1 w-full">
             <p className="text-[#535F7F] text-sm">Business Location:</p>
             <select
-              className="form-control border text-sm border-[#D2D6DE] p-1"
+              className="form-control border text-sm border-[#D2D6DE] p-1 w-full"
               id="business_location"
               name="location_id"
               onChange={(e) =>
@@ -209,32 +209,33 @@ const AddStockAdjustment = () => {
                 ))}
             </select>
           </span>
-          <span className="flex flex-col gap-1">
+          <span className="flex flex-col gap-1 w-full">
             <p className="text-[#535F7F] text-sm ">Reference No:</p>
             <input
               type="text"
-              className="border border-[#D2D6DE] p-1 text-sm"
+              className="border border-[#D2D6DE] p-1 text-sm w-full"
               name="ref_no"
               onChange={(e) => handleOnChange(e, "object", setFormData)}
             />
           </span>
+
           <input
             type="text"
             placeholder="search products for stock adjustment"
-            className="border border-[#D2D6DE] p-1 w-full rounded-md mt-7 text-sm"
+            className="border border-[#D2D6DE] p-1 w-full rounded-md mt-6 text-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <span className="flex flex-col gap-1">
+          <span className="flex flex-col gap-1 w-full">
             <p className="text-[#535F7F] text-sm">Date:</p>
             <input
               type="date"
-              className="border border-[#D2D6DE] p-1 text-sm"
+              className="border border-[#D2D6DE] p-1 text-sm w-full"
               name="date_taken"
               onChange={(e) => handleOnChange(e, "object", setFormData)}
             />
           </span>
-          <span className="flex flex-col gap-1">
+          <span className="flex flex-col gap-1 w-full">
             <p className="text-[#535F7F] text-sm ">Adjustment Type:*</p>
             <select
               className="form-control border border-[#D2D6DE] p-1 w-full text-sm"
@@ -247,8 +248,7 @@ const AddStockAdjustment = () => {
                 Select adjustment
               </option>
               <option value="normal">Normal</option>
-              {/* <option value="">2</option>
-              <option value="">3</option> */}
+              <option value="abnormal">Abnormal</option>
             </select>
           </span>
         </div>
@@ -256,7 +256,7 @@ const AddStockAdjustment = () => {
         {products && (!products.data || products.data.length === 0) ? (
           <p className="font-bold text-lg">No products found</p>
         ) : (
-          <AddStockAdjustmentTable
+          <StockTakingTable
             products={filteredProducts}
             selectedProducts={selectedProductIds}
             onProductSelect={handleProductSelect}
@@ -280,4 +280,4 @@ const AddStockAdjustment = () => {
   );
 };
 
-export default AddStockAdjustment;
+export default StockTaking;

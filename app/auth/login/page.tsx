@@ -39,7 +39,7 @@ const Login = () => {
         position: "top",
         isClosable: true,
       });
-      router.push("/stock-adjustment/add-stock-adjustment");
+      router.push("/stock-adjustment/list-stock-adjustment");
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
