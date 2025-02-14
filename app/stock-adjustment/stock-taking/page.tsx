@@ -43,7 +43,7 @@ const StockTaking = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    const { location_id, ref_no, date_taken, adjustment_type, products } =
+    const { location_id, date_taken, adjustment_type, products } =
       formData;
     setIsFormValid(
       location_id !== undefined &&
