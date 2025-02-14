@@ -47,7 +47,7 @@ const StockTaking = () => {
       formData;
     setIsFormValid(
       location_id !== undefined &&
-        ref_no.trim() !== "" &&
+        // ref_no.trim() !== "" &&
         date_taken.trim() !== "" &&
         adjustment_type.trim() !== "" &&
         products.length > 0
