@@ -30,6 +30,9 @@ export class ApiUrl {
   //User authentication
   public static login = `${ApiUrl.mainBaseUrl}/oauth/token`;
 
+  //Profile
+  public static getProfile = `${ApiUrl.baseUrl}/user/loggedin`;
+
   //stock-adjustment
   public static stockTaking = `${ApiUrl.baseUrl}/stock-taking`;
   public static getStockAdjustments = `${ApiUrl.baseUrl}/stock-taking`;

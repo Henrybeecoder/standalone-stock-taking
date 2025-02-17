@@ -11,7 +11,7 @@ import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { FormEvent, useState, useEffect } from "react";
 
-type StockTakingRequest = {
+export type StockTakingRequest = {
   location_id: number | undefined;
   ref_no: string;
   date_taken: string;
@@ -38,67 +38,65 @@ const StockTaking = () => {
 
   console.log("formData", formData);
 
-  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
+  // const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    const { location_id, date_taken, adjustment_type, products } =
-      formData;
+    const { location_id, date_taken, adjustment_type, products } = formData;
     setIsFormValid(
       location_id !== undefined &&
-        // ref_no.trim() !== "" &&
         date_taken.trim() !== "" &&
         adjustment_type.trim() !== "" &&
         products.length > 0
     );
   }, [formData]);
 
-  const handleProductSelect = (productId: number) => {
-    setSelectedProductIds((prevSelected) => {
-      const newSelected = prevSelected.includes(productId)
-        ? prevSelected.filter((id) => id !== productId)
-        : [...prevSelected, productId];
+  // const handleProductSelect = (productId: number) => {
+  //   setSelectedProductIds((prevSelected) => {
+  //     const newSelected = prevSelected.includes(productId)
+  //       ? prevSelected.filter((id) => id !== productId)
+  //       : [...prevSelected, productId];
 
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        products: newSelected.map((id) => {
-          const product = products?.data.find((p) => p.id === id);
-          return {
-            id,
-            variation_id: product?.product_variations[0]?.id,
-            quantity: 20,
-          };
-        }),
-      }));
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       products: newSelected.map((id) => {
+  //         const product = products?.data.find((p) => p.id === id);
+  //         return {
+  //           id,
+  //           variation_id: product?.product_variations[0]?.id,
+  //           quantity: 20,
+  //         };
+  //       }),
+  //     }));
 
-      return newSelected;
-    });
-  };
+  //     return newSelected;
+  //   });
+  // };
 
-  const handleSelectAll = () => {
-    if (products && selectedProductIds.length === products.data.length) {
-      setSelectedProductIds([]);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        products: [],
-      }));
-    } else if (products) {
-      const allProductIds = products.data.map((product) => product.id);
-      setSelectedProductIds(allProductIds);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        products: allProductIds.map((id) => {
-          const product = products.data.find((p) => p.id === id);
-          return {
-            id,
-            variation_id: product?.product_variations[0]?.id,
-            quantity: undefined,
-          };
-        }),
-      }));
-    }
-  };
+  // const handleSelectAll = () => {
+  //   if (products && selectedProductIds.length === products.data.length) {
+  //     setSelectedProductIds([]);
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       products: [],
+  //     }));
+  //   } else if (products) {
+  //     const allProductIds = products.data.map((product) => product.id);
+  //     setSelectedProductIds(allProductIds);
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       products: allProductIds.map((id) => {
+  //         const product = products.data.find((p) => p.id === id);
+  //         return {
+  //           id,
+  //           variation_id: product?.product_variations[0]?.id,
+  //           quantity: undefined,
+  //         };
+  //       }),
+  //     }));
+  //   }
+  // };
 
   const {
     data: businessLocations,
@@ -258,9 +256,9 @@ const StockTaking = () => {
         ) : (
           <StockTakingTable
             products={filteredProducts}
-            selectedProducts={selectedProductIds}
-            onProductSelect={handleProductSelect}
-            onSelectAll={handleSelectAll}
+            setFormData={setFormData}
+            // onProductChange={handleProductSelect}
+            // onSelectAll={handleSelectAll}
           />
         )}
         <div className="w-full flex justify-end gap-2">

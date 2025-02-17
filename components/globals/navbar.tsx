@@ -10,6 +10,8 @@ import Image from "next/image";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./sidebar";
 import useSidebar from "@/atoms/SidebarAtom";
+import { LocalStorage } from "@/utils/localStorage.util";
+import { GetUserProfileResponse } from "@/types";
 
 const Navbar = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useSidebar();
@@ -17,6 +19,8 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setSidebarIsOpen(!sidebarIsOpen);
   };
+
+  const user: GetUserProfileResponse = LocalStorage.get("user");
 
   const currentDate = new Date().toLocaleDateString();
   const formattedCurrentDate = currentDate.replace(/\//g, "-");
@@ -48,7 +52,9 @@ const Navbar = () => {
           </button>
           <span className="flex items-center gap-[16px]">
             <Image src={profile_pic} alt="" />
-            <p className="text-white">Clark Kent</p>
+            <p className="text-white">
+              {user.first_name} {user.last_name}
+            </p>
           </span>
         </div>
       </div>
