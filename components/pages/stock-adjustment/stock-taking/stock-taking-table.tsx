@@ -173,7 +173,14 @@ const StockTakingTable: React.FC<StockTakingTableProps> = ({
                       "N/A")}
                 </td>
                 <td className="border-4 border-[#F6F6F6] px-4 py-2 text-right">
-                  N/A
+                  {product?.product_variations[0]?.variations[0]
+                    ?.default_sell_price &&
+                    newQty *
+                      Number(
+                        product?.product_variations[0]?.variations[0]?.default_sell_price.split(
+                          "."
+                        )[0]
+                      )}
                 </td>
               </tr>
             );

@@ -9,7 +9,7 @@ import { handleOnChange } from "@/utils/handleOnChange.util";
 import { useToast } from "@chakra-ui/react";
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { FormEvent, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
 
 export type StockTakingRequest = {
   location_id: number | undefined;
@@ -160,8 +160,7 @@ const StockTaking = () => {
     },
   });
 
-  const handleSave = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSave = () => {
     if (isFormValid) {
       mutate();
     } else {
@@ -178,7 +177,7 @@ const StockTaking = () => {
     <DashboardLayout className="w-full">
       <h1 className="text-xl font-medium">Add Stock Taking</h1>
       <form
-        onSubmit={handleSave}
+        // onSubmit={}
         className="flex flex-col gap-[39px] items-center w-full"
       >
         <div className="bg-white rounded p-5 px-4 grid md:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-3 place-items-start w-full">
@@ -263,9 +262,10 @@ const StockTaking = () => {
         )}
         <div className="w-full flex justify-end gap-2">
           <button
-            type="submit"
+            // type="submit"
             className="text-sm bg-[#1472E8] p-2 px-3 w-max text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!isFormValid}
+            onClick={handleSave}
           >
             {isPending ? "Saving..." : "Save"}
           </button>

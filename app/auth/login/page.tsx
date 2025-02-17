@@ -1,4 +1,3 @@
-
 "use client";
 import { ApiRequest } from "@/utils/apiRequest.util";
 import { ApiUrl } from "@/utils/apiUrl.util";
@@ -9,15 +8,6 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { LocalStorage } from "@/utils/localStorage.util";
-
-interface ApiError {
-  response?: {
-    data: {
-      message: string;
-    };
-  };
-  message: string;
-}
 
 const Login = () => {
   const toast = useToast();
@@ -57,16 +47,15 @@ const Login = () => {
 
       router.push("/stock-adjustment/list-stock-adjustment");
     },
-    onError: (error: ApiError) => {
+    onError: (error: unknown) => {
       let errorMessage = "An unexpected error occurred.";
-      if (error.response && error.response.data.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.message) {
+      if (error instanceof Error) {
         errorMessage = error.message;
       }
       toast({
         status: "error",
-        description: errorMessage,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        description: (error as any).response.data.message ?? errorMessage,
         position: "top",
         isClosable: true,
       });
