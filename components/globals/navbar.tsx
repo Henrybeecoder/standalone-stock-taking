@@ -53,7 +53,7 @@ const Navbar = () => {
           <span className="flex items-center gap-[16px]">
             <Image src={profile_pic} alt="" />
             <p className="text-white">
-              {user.first_name} {user.last_name}
+              {user?.first_name} {user?.last_name}
             </p>
           </span>
         </div>
