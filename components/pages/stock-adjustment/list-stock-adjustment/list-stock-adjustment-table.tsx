@@ -103,7 +103,7 @@ const ListStockAdjustmentTable: React.FC<ListStockAdjustmentTableProps> = ({
                 </td>
 
                 <td className="border-4 border-[#F4F4F4] px-4 py-2 text-right">
-                  {item.created_by.first_name ?? "N/A"}
+                  {item?.created_by?.first_name ?? "N/A"}
                 </td>
               </tr>
             ))}
